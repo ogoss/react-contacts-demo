@@ -1,0 +1,8 @@
+{
+  "generator-react-webpack": {
+    "appName": "reactContactsDemo",
+    "style": "scss",
+    "postcss": false,
+    "generatedWithVersion": 3
+  }
+}
