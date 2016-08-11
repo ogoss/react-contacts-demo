@@ -5,7 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import TitleBar from './titleBar/titleBar';
-import SliderBar from './sliderBar/slideBar';
+import BottomBar from './bottomBar/bottomBar';
 
 require('normalize.css/normalize.css');
 require('../styles/app.scss');
@@ -19,7 +19,7 @@ injectTapEventPlugin();
  *
  * <TitleBar /> 顶部标题组件
  * <section></section> 正文内容
- * <SliderBar /> 底部控制栏组件
+ * <BottomBar /> 底部控制栏组件
  */
 export default class AppComponent extends React.Component {
   render() {
@@ -28,7 +28,7 @@ export default class AppComponent extends React.Component {
         <div>
           <TitleBar />
           <section>{this.props.children}</section>
-          <SliderBar />
+          <BottomBar />
         </div>
       </MuiThemeProvider>
     );

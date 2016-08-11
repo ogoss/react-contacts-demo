@@ -13,8 +13,9 @@ const routers = (
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
-      <Route path="/contact" component={Contact} />
-      <Route path="/user" component={User} />
+      <Route path="/" component={Home} />
+      <Route path="contact" component={Contact} />
+      <Route path="user" component={User} />
       <Route path="*" component={NotFound} />
     </Route>
   </Router>
