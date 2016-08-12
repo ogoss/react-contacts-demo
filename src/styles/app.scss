@@ -1,11 +1,13 @@
 /* Base Application Styles */
 
-/*
- * 取消button默认样式
- */
+// 取消button默认样式
 button,
 html [type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: none;
+}
+// 解决手机端点击按钮触发颜色块
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
