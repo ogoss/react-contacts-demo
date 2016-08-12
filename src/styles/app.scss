@@ -1,1 +1,11 @@
 /* Base Application Styles */
+
+/*
+ * 取消button默认样式
+ */
+button,
+html [type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: none;
+}
