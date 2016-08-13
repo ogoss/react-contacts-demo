@@ -1,9 +1,15 @@
 import React from 'react';
+import TitleBar from '../titleBar/titleBar';
+import BottomBar from '../bottomBar/bottomBar';
 
 export default class Home extends React.Component {
   render() {
     return (
-      <p>This is Home</p>
+      <section>
+        <TitleBar />
+        {this.props.children}
+        <BottomBar />
+      </section>
     );
   }
 }

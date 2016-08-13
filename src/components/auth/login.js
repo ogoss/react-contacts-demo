@@ -4,8 +4,12 @@ import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 
-export default class LoginPage extends React.Component {
+export default class Login extends React.Component {
   static defaultProps = {
+    formStyle: {
+      margin: '10px auto 10px',
+      width: '90%'
+    },
     flatBtnStyle: {
       margin: '20px 0 0 0',
       width: '50%'
@@ -16,7 +20,7 @@ export default class LoginPage extends React.Component {
   }
   render() {
     return(
-      <form className="formBox">
+      <form style={this.props.formStyle}>
         <TextField
           fullWidth={true}
           floatingLabelText="Username"
