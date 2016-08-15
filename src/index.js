@@ -1,8 +1,8 @@
 import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, useRouterHistory} from 'react-router';
-import {createHashHistory} from 'history';
+import { Router, useRouterHistory } from 'react-router';
+import { createHashHistory } from 'history';
 
 import AppRoutes from './routers';
 

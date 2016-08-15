@@ -1,5 +1,5 @@
 import React from 'react';
-import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
+import { BottomNavigation, BottomNavigationItem } from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
 import FontIcon from 'material-ui/FontIcon';
 
@@ -10,19 +10,13 @@ import FontIcon from 'material-ui/FontIcon';
  */
 
 // 跳转按钮及地址
-const menuList = [
-  {label: 'Home', linkto: '#/', icon: 'home'},
-  {label: 'Contact', linkto: '#/contact', icon: 'group'},
-  {label: 'User', linkto: '#/user', icon: 'person'}
-];
-// 底部navigation样式
-const navBarStyle = {
-  position: 'fixed',
-  left: 0,
-  bottom: 0,
-  width: '100%',
-  textAlign: 'center'
-};
+ const menuList = [{
+   label: 'Home', linkto: '#/', icon: 'home'
+ }, {
+   label: 'Contact', linkto: '#/contact', icon: 'group'
+ }, {
+   label: 'User', linkto: '#/user', icon: 'person'
+ }];
 
 export default class BottomBar extends React.Component {
   constructor(props) {
@@ -34,7 +28,14 @@ export default class BottomBar extends React.Component {
   }
   static defaultProps = {
     menuList: menuList,
-    navBarStyle: navBarStyle
+    // 底部navigation样式
+    navBarStyle: {
+      position: 'fixed',
+      left: 0,
+      bottom: 0,
+      width: '100%',
+      textAlign: 'center'
+    }
   }
   /*
    * 获取当前地址，高亮显示对应菜单
@@ -44,8 +45,8 @@ export default class BottomBar extends React.Component {
     const currentPath = window.location.hash;
     let currentNavIndex = 0;
 
-    for(let i = 0, len = menuList.length; i < len; i++) {
-      if(menuList[i].linkto === currentPath) {
+    for (let i = 0, len = menuList.length; i < len; i++) {
+      if (menuList[i].linkto === currentPath) {
         currentNavIndex = i;
         break;
       }
