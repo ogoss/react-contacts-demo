@@ -6,7 +6,7 @@ import FontIcon from 'material-ui/FontIcon';
 /*
  * TODO: 2016-08-12
  * 1.输入错误地址，底部按钮，不跳转至默认
- * 2.BottomNavigationItem 隐藏labelicon居中
+ * 2.BottomNavigationItem 隐藏label属性，使icon居中
  */
 
 // 跳转按钮及地址
@@ -24,40 +24,43 @@ const menuList = [{
   icon: 'person'
 }];
 
+// 底部navigation样式
+const navBarStyle = {
+  position: 'fixed',
+  left: 0,
+  bottom: 0,
+  width: '100%',
+  textAlign: 'center'
+};
+
+/*
+ * 获取当前地址，高亮显示对应菜单
+ * return {number} 被选中菜单id
+ */
+function handleCurrentNav() {
+  const currentPath = window.location.hash;
+  let currentNavIndex = 0;
+
+  for (let i = 0, len = menuList.length; i < len; i++) {
+    if (menuList[i].linkto === currentPath) {
+      currentNavIndex = i;
+      break;
+    }
+  }
+  return currentNavIndex;
+}
+
 export default class BottomBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedIndex: 1
     };
-    this.handleCurrentNav = this.handleCurrentNav.bind(this);
+    this.handleCurrentNav = handleCurrentNav.bind(this);
   }
   static defaultProps = {
-      menuList: menuList,
-      // 底部navigation样式
-      navBarStyle: {
-        position: 'fixed',
-        left: 0,
-        bottom: 0,
-        width: '100%',
-        textAlign: 'center'
-      }
-    }
-    /*
-     * 获取当前地址，高亮显示对应菜单
-     * return {number} 被选中菜单id
-     */
-  handleCurrentNav() {
-    const currentPath = window.location.hash;
-    let currentNavIndex = 0;
-
-    for (let i = 0, len = menuList.length; i < len; i++) {
-      if (menuList[i].linkto === currentPath) {
-        currentNavIndex = i;
-        break;
-      }
-    }
-    return currentNavIndex;
+    menuList: menuList,
+    navBarStyle: navBarStyle
   }
   render() {
     return (

@@ -6,95 +6,104 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Snackbar from 'material-ui/Snackbar';
 
+const defaultProps = {
+  form: {
+    margin: '20px 10px 0'
+  },
+  inner: {
+    padding: '0 10px'
+  },
+  flatBtn: {
+    width: '40%',
+    margin: '5%'
+  },
+  checkBox: {
+    margin: '20px 0'
+  }
+};
+const stateObj = {
+  user: '', // 用户名
+  pw: '', // 密码
+  checked: false, // 是否记住登陆信息
+  userErr: '', // 用户名输入错误
+  pwErr: '', // 密码输入错误
+  disabled: true, // 是否禁用提交按钮
+  context: '登陆', // 登陆按钮文字
+  opened: false, // 是否显示提示框
+  loginErr: '' // 登陆失败提示
+};
+
+function onUserChange(e) {
+  let value = e.target.value;
+  this.setState({
+    user: value,
+    userErr: value ? '' : '账号不能为空',
+    disabled: !value || !this.state.pw
+  });
+}
+
+function onPWChange(e) {
+  let value = e.target.value;
+  this.setState({
+    pw: value,
+    pwErr: value ? '' : '密码不能为空',
+    disabled: !this.state.user || !value
+  });
+}
+
+function onCBChange(e) {
+  this.setState({
+    checked: e.target.checked
+  });
+}
+
+function onSubmit() {
+  // 提交表单，使用setTimeout模拟ajax提交
+  let localStorage = window.localStorage;
+  this.setState({
+    disabled: true,
+    context: '登陆中。。。'
+  });
+  setTimeout(() => {
+    if (this.state.user === 'ogoss' && this.state.pw === '123456') {
+      // 成功，储存用户数据，并跳转首页
+      localStorage.userId = Date.now();
+      localStorage.userName = this.state.user;
+      localStorage.rembered = this.state.checked;
+      localStorage.token = 'token' + Date.now();
+      location.href = '#/';
+    } else {
+      // 失败，弹出提示
+      this.setState({
+        loginErr: '账号或密码错误！',
+        opened: true
+      });
+    }
+    this.setState({
+      disabled: false,
+      context: '登陆'
+    });
+  }, 1000);
+}
+
+function onRequestClose() {
+  this.setState({
+    opened: false
+  });
+}
+
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      user: '', // 用户名
-      pw: '', // 密码
-      checked: false, // 是否记住登陆信息
-      userErr: '', // 用户名输入错误
-      pwErr: '', // 密码输入错误
-      disabled: true, // 是否禁用提交按钮
-      context: '登陆', // 登陆按钮文字
-      opened: false, // 是否显示提示框
-      loginErr: '' // 登陆失败提示
-    };
-    this.onUserChange = this.onUserChange.bind(this);
-    this.onPWChange = this.onPWChange.bind(this);
-    this.onCBChange = this.onCBChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onRequestClose = this.onRequestClose.bind(this);
+    this.state = stateObj;
+    this.onUserChange = onUserChange.bind(this);
+    this.onPWChange = onPWChange.bind(this);
+    this.onCBChange = onCBChange.bind(this);
+    this.onSubmit = onSubmit.bind(this);
+    this.onRequestClose = onRequestClose.bind(this);
   }
-  static defaultProps = {
-    form: {
-      margin: '20px 10px 0'
-    },
-    inner: {
-      padding: '0 10px'
-    },
-    flatBtn: {
-      width: '40%',
-      margin: '5%'
-    },
-    checkBox: {
-      margin: '20px 0'
-    }
-  }
-  onUserChange(e) {
-    let value = e.target.value;
-    this.setState({
-      user: value,
-      userErr: value ? '' : '账号不能为空',
-      disabled: !value || !this.state.pw
-    });
-  }
-  onPWChange(e) {
-    let value = e.target.value;
-    this.setState({
-      pw: value,
-      pwErr: value ? '' : '密码不能为空',
-      disabled: !this.state.user || !value
-    });
-  }
-  onCBChange(e) {
-    this.setState({
-      checked: e.target.checked
-    });
-  }
-  onSubmit() {
-    // 提交表单，使用setTimeout模拟ajax提交
-    let localStorage = window.localStorage;
-    this.setState({
-      disabled: true,
-      context: '登陆中。。。'
-    });
-    setTimeout(() => {
-      if (this.state.user === 'ogoss' && this.state.pw === '123456') {
-        // 成功，储存用户数据，并跳转首页
-        localStorage.userId = Date.now();
-        localStorage.userName = this.state.user;
-        localStorage.rembered = this.state.checked;
-        localStorage.token = 'token' + Date.now();
-        location.href = '#/';
-      } else {
-        // 失败，弹出提示
-        this.setState({
-          loginErr: '账号或密码错误！',
-          opened: true
-        });
-      }
-      this.setState({
-        disabled: false,
-        context: '登陆'
-      });
-    }, 1000);
-  }
-  onRequestClose() {
-    this.setState({
-      opened: false
-    });
-  }
+  static defaultProps = defaultProps;
+
   render() {
     return (
       <section style={this.props.form}>
