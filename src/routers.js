@@ -11,7 +11,7 @@ import NotFound from './components/error/notFound';
 
 // 定义页面路由
 const AppRoutes = (
-    <Route component={App}>
+  <Route component={App}>
       <Route path="/" component={Home}>
         <IndexRoute component={Moment} />
         <Route path="/contact" component={Contact} />

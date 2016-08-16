@@ -10,5 +10,4 @@ import AppRoutes from './routers';
 ReactDOM.render(
   <Router history={useRouterHistory(createHashHistory)({queryKey: false})}>
     {AppRoutes}
-  </Router>
-, document.querySelector('#app'));
+  </Router>, document.querySelector('#app'));

@@ -2,12 +2,32 @@
 
 // 取消button默认样式
 button,
-html [type="button"],
-[type="reset"],
-[type="submit"] {
+html [type='button'],
+[type='reset'],
+[type='submit'] {
   -webkit-appearance: none;
 }
+
 // 解决手机端点击按钮触发颜色块
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.outter {
+  width: 50px;
+  height: 50px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  border: 1px solid;
+  background-color: #fff;
+  .inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+  }
 }

@@ -10,13 +10,19 @@ import FontIcon from 'material-ui/FontIcon';
  */
 
 // 跳转按钮及地址
- const menuList = [{
-   label: 'Home', linkto: '#/', icon: 'home'
- }, {
-   label: 'Contact', linkto: '#/contact', icon: 'group'
- }, {
-   label: 'User', linkto: '#/user', icon: 'person'
- }];
+const menuList = [{
+  label: 'Home',
+  linkto: '#/',
+  icon: 'home'
+}, {
+  label: 'Contact',
+  linkto: '#/contact',
+  icon: 'group'
+}, {
+  label: 'User',
+  linkto: '#/user',
+  icon: 'person'
+}];
 
 export default class BottomBar extends React.Component {
   constructor(props) {
@@ -27,20 +33,20 @@ export default class BottomBar extends React.Component {
     this.handleCurrentNav = this.handleCurrentNav.bind(this);
   }
   static defaultProps = {
-    menuList: menuList,
-    // 底部navigation样式
-    navBarStyle: {
-      position: 'fixed',
-      left: 0,
-      bottom: 0,
-      width: '100%',
-      textAlign: 'center'
+      menuList: menuList,
+      // 底部navigation样式
+      navBarStyle: {
+        position: 'fixed',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        textAlign: 'center'
+      }
     }
-  }
-  /*
-   * 获取当前地址，高亮显示对应菜单
-   * return {number} 被选中菜单id
-   */
+    /*
+     * 获取当前地址，高亮显示对应菜单
+     * return {number} 被选中菜单id
+     */
   handleCurrentNav() {
     const currentPath = window.location.hash;
     let currentNavIndex = 0;

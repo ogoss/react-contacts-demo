@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -13,12 +14,17 @@ export default class Login extends React.Component {
       pw: '', // 密码
       checked: false, // 是否记住登陆信息
       userErr: '', // 用户名输入错误
-      pwErr: '' // 密码输入错误
+      pwErr: '', // 密码输入错误
+      disabled: true, // 是否禁用提交按钮
+      context: '登陆', // 登陆按钮文字
+      opened: false, // 是否显示提示框
+      loginErr: '' // 登陆失败提示
     };
     this.onUserChange = this.onUserChange.bind(this);
     this.onPWChange = this.onPWChange.bind(this);
     this.onCBChange = this.onCBChange.bind(this);
-    this.submit = this.submit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onRequestClose = this.onRequestClose.bind(this);
   }
   static defaultProps = {
     form: {
@@ -28,36 +34,42 @@ export default class Login extends React.Component {
       padding: '0 10px'
     },
     flatBtn: {
-      margin: '5%',
-      width: '40%'
+      width: '40%',
+      margin: '5%'
     },
     checkBox: {
       margin: '20px 0'
     }
   }
   onUserChange(e) {
+    let value = e.target.value;
     this.setState({
-      user: e.target.value,
-      userErr: e.target.value ? '' : '账号不能为空'
+      user: value,
+      userErr: value ? '' : '账号不能为空',
+      disabled: !value || !this.state.pw
     });
   }
   onPWChange(e) {
+    let value = e.target.value;
     this.setState({
-      pw: e.target.value,
-      pwErr: e.target.value ? '' : '密码不能为空'
+      pw: value,
+      pwErr: value ? '' : '密码不能为空',
+      disabled: !this.state.user || !value
     });
   }
   onCBChange(e) {
     this.setState({
       checked: e.target.checked
-    })
+    });
   }
-  submit() {
-    // TODO: 登陆状态提示框
-    
+  onSubmit() {
     // 提交表单，使用setTimeout模拟ajax提交
     let localStorage = window.localStorage;
-    setTimeout(()=>{
+    this.setState({
+      disabled: true,
+      context: '登陆中。。。'
+    });
+    setTimeout(() => {
       if (this.state.user === 'ogoss' && this.state.pw === '123456') {
         // 成功，储存用户数据，并跳转首页
         localStorage.userId = Date.now();
@@ -67,12 +79,31 @@ export default class Login extends React.Component {
         location.href = '#/';
       } else {
         // 失败，弹出提示
+        this.setState({
+          loginErr: '账号或密码错误！',
+          opened: true
+        });
       }
+      this.setState({
+        disabled: false,
+        context: '登陆'
+      });
     }, 1000);
+  }
+  onRequestClose() {
+    this.setState({
+      opened: false
+    });
   }
   render() {
     return (
       <section style={this.props.form}>
+        <Snackbar
+          open={this.state.opened}
+          message={this.state.loginErr}
+          autoHideDuration={4000}
+          onRequestClose={this.onRequestClose}
+        />
         <Paper style={this.props.inner}>
           <TextField
             fullWidth={true}
@@ -98,11 +129,11 @@ export default class Login extends React.Component {
             checked={this.state.checked}
           />
           <RaisedButton
-            label="登录"
+            label={this.state.context}
             fullWidth={true}
             primary={true}
-            onClick={this.submit}
-            disabled={!this.state.user || !this.state.pw}
+            onClick={this.onSubmit}
+            disabled={this.state.disabled}
           />
           <FlatButton
             style={this.props.flatBtn}
