@@ -1,6 +1,7 @@
 import React from 'react';
-import ApiList from '../../apiList';
 import { Card, CardMedia, CardTitle } from 'material-ui/Card';
+import ApiList from '../../apiList';
+import Scroll from '../utils/scroll.js'
 
 const cardStyle = {
   'marginBottom': '10px'
@@ -30,19 +31,26 @@ function fetchWxResult(num = 10, page = 1) {
       }
     };
 
-  fetch(input, init)
-    .then((res) => {
-      if (res.ok) {
-        res.json().then((data) => {
-          if (!data.errNum) {
-            this.setState({
-              wxResult: data.newslist
-            });
-          }
-        });
-      }
-    });
+  fetch(input, init).then((res) => {
+    if (res.ok) {
+      res.json().then((data) => {
+        if (!data.errNum) {
+          this.setState({
+            wxResult: data.newslist
+          });
+        }
+      });
+    }
+  });
 }
+
+/**
+ * TODO:
+ * 1.页面下拉，动态加载新数据
+ * 2.返回顶部按钮
+ * 3.图片lazyload
+ * 4.跳转至其他页面后，返回首页数据不会再次通过API调取
+ */
 export default class Moment extends React.Component {
   constructor(props) {
     super(props);
@@ -57,9 +65,14 @@ export default class Moment extends React.Component {
     titleStyle: titleStyle,
     subtitleStyle: subtitleStyle
   }
+  handleScroll() {
+    console.log('handleScroll');
+  }
   render() {
     return (
-      <section className="container">
+      <Scroll
+        scrollClassName="container"
+        handleScroll={this.handleScroll}>
         {this.state.wxResult.map((data, index) => (
           <a href={data.url} key={index}  >
             <Card style={this.props.cardStyle}>
@@ -76,7 +89,7 @@ export default class Moment extends React.Component {
             </Card>
           </a>
         ))}
-      </section>
+      </Scroll>
     );
   }
 }

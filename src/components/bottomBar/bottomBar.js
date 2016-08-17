@@ -4,7 +4,7 @@ import Paper from 'material-ui/Paper';
 import FontIcon from 'material-ui/FontIcon';
 
 /*
- * TODO: 2016-08-12
+ * TODO:
  * 1.输入错误地址，底部按钮，不跳转至默认
  * 2.BottomNavigationItem 隐藏label属性，使icon居中
  */
