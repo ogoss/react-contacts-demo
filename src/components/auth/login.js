@@ -34,7 +34,7 @@ const stateObj = {
 };
 
 function onUserChange(e) {
-  let value = e.target.value;
+  const value = e.target.value;
   this.setState({
     user: value,
     userErr: value ? '' : '账号不能为空',
@@ -43,7 +43,7 @@ function onUserChange(e) {
 }
 
 function onPWChange(e) {
-  let value = e.target.value;
+  const value = e.target.value;
   this.setState({
     pw: value,
     pwErr: value ? '' : '密码不能为空',

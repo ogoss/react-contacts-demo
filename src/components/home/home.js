@@ -15,7 +15,7 @@ export default class Home extends React.Component {
     return (
       <div>
         <TitleBar />
-        <div>{this.props.children}</div>
+        {this.props.children}
         <BottomBar />
       </div>
     );

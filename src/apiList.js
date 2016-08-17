@@ -1,5 +1,6 @@
+// API接口地址模块
 const ApiList = {
-	getWxHot: 'http://apis.baidu.com/txapi/weixin/wxhot'
+	getHomeList: 'http://apis.baidu.com/txapi/huabian/newtop'
 };
 
 export default ApiList;

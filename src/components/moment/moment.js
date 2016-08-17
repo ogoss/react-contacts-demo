@@ -1,35 +1,82 @@
 import React from 'react';
 import ApiList from '../../apiList';
+import { Card, CardMedia, CardTitle } from 'material-ui/Card';
+
+const cardStyle = {
+  'marginBottom': '10px'
+};
+const cardTitleStyle = {
+  'padding': '8px 14px'
+};
+const titleStyle = {
+  'fontSize': '14px',
+  'lineHeight': '18px',
+  'marginBottom': '4px'
+};
+const subtitleStyle = {
+  fontSize: '12px'
+};
 
 /**
- * 初始化数据
- * @type {Object}
+ * 获取首页数据列表 APIStore
+ * @method GET
  */
-const stateProps = [{
-	wxResult: fetchWxResult()
-}];
+function fetchWxResult(num = 10, page = 1) {
+  const input = `${ApiList.getHomeList}?num=${num}&page=${page}`,
+    init = {
+      method: 'GET',
+      headers: {
+        apikey: '9befa2c15677e6aba17ebfb2f6ad7e4f'
+      }
+    };
 
-/**
- * 获取微信热门精选数据
- * @param {object} wxResult 微信数据对象
- */
-function fetchWxResult() {
-  let wxResult = {};
-
-  // TODO: get data by fetchAPI
-
-  return wxResult;
+  fetch(input, init)
+    .then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          if (!data.errNum) {
+            this.setState({
+              wxResult: data.newslist
+            });
+          }
+        });
+      }
+    });
 }
 export default class Moment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      wxResult: stateProps
+      wxResult: []
     };
+    fetchWxResult.call(this);
+  }
+  static defaultProps = {
+    cardStyle: cardStyle,
+    cardTitleStyle: cardTitleStyle,
+    titleStyle: titleStyle,
+    subtitleStyle: subtitleStyle
   }
   render() {
     return (
-      <div></div>
+      <section className="container">
+        {this.state.wxResult.map((data, index) => (
+          <a href={data.url} key={index}  >
+            <Card style={this.props.cardStyle}>
+              <CardMedia
+                overlay={
+                  <CardTitle
+                    style={this.props.cardTitleStyle}
+                    titleStyle={this.props.titleStyle}
+                    subtitleStyle={this.props.subtitleStyle}
+                    title={data.title}
+                    subtitle={data.ctime} />} >
+                <img src={data.picUrl} />
+              </CardMedia>
+            </Card>
+          </a>
+        ))}
+      </section>
     );
   }
 }
